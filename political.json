@@ -1,0 +1,66 @@
+{
+    "version": 8,
+    "name": "OSM Liberty",
+    "metadata": {
+        "maputnik:license": "https://github.com/maputnik/osm-liberty/blob/gh-pages/LICENSE.md",
+        "maputnik:renderer": "mbgljs",
+        "openmaptiles:version": "3.x"
+    },
+    "sources": {
+        "natural_earth_shaded_relief": {
+            "maxzoom": 6,
+            "tileSize": 256,
+            "tiles": [
+                "https://klokantech.github.io/naturalearthtiles/tiles/natural_earth_2_shaded_relief.raster/{z}/{x}/{y}.png"
+            ],
+            "type": "raster"
+        },
+        "ohm": {
+            "type": "vector",
+            "tiles": [
+                "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf"
+            ],
+            "minZoom": 0,
+            "maxZoom": 22
+        }
+    },
+    "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
+    "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=q9mnFdtg2QxTwjYaTGjp",
+    "layers": [{
+            "id": "background",
+            "type": "background",
+            "paint": { "background-color": "rgb(239,239,239)" }
+        },
+        {
+            "id": "natural_earth",
+            "type": "raster",
+            "source": "natural_earth_shaded_relief",
+            "maxzoom": 6,
+            "paint": { "raster-opacity": { "base": 1.5, "stops": [
+                        [0, 0.6],
+                        [6, 0.1]
+                    ] } }
+        },
+
+        {
+            "id": "country_name",
+            "type": "symbol",
+            "source": "ohm",
+            "source-layer": "ohm",
+            "layout": {
+                "text-field": "{name}",
+                "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+                "text-size": 12,
+                "visibility": "visible"
+            }
+        },
+        {
+            "id": "boundaries",
+            "type": "line",
+            "source": "ohm",
+            "source-layer": "ohm",
+            "layout": { "visibility": "visible" }
+        }
+    ],
+    "id": "osm-liberty"
+}

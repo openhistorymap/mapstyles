@@ -1,0 +1,8 @@
+[{
+    "default": true,
+    "label": "Political",
+    "style": "political.json"
+}, {
+    "label": "Religious",
+    "style": "religion.json"
+}]
