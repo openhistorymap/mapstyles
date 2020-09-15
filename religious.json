@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "OHM Political Map",
+    "name": "OHM Religious",
     "metadata": {
         "maputnik:license": "https://github.com/maputnik/osm-liberty/blob/gh-pages/LICENSE.md",
         "maputnik:renderer": "mbgljs",

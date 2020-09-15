@@ -5,4 +5,7 @@
 }, {
     "label": "Religious",
     "style": "religion.json"
+}, {
+    "label": "cultural",
+    "style": "culture.json"
 }]
