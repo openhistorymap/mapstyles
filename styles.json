@@ -4,8 +4,8 @@
     "style": "political.json"
 }, {
     "label": "Religious",
-    "style": "religion.json"
+    "style": "religious.json"
 }, {
-    "label": "cultural",
+    "label": "Cultural",
     "style": "culture.json"
 }]
