@@ -67,7 +67,7 @@
     {
       "id": "landuse_residential",
       "type": "fill",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "landuse",
       "maxzoom": 8,
       "filter": ["==", "class", "residential"],
@@ -1305,8 +1305,15 @@
       "source": "ohm",
       "source-layer": "boundary",
       "minzoom": 0,
+      "maxzoom": 10,
       "layout": {"visibility": "visible"},
-      "paint": {"fill-color": "rgba(107, 79, 79, 1)", "fill-opacity": 0.3}
+      "paint": {
+        "fill-color": ["get", "color"],
+        "fill-opacity": {"stops": [[0, 0.8], [6, 0.6], [7, 0]]},
+        "fill-antialias": true,
+        "fill-outline-color": "rgba(164, 115, 115, 1)",
+        "fill-translate": [0, 0]
+      }
     },
     {
       "id": "boundary_2_z0-4",
@@ -1342,6 +1349,24 @@
         "line-color": "hsl(248, 1%, 41%)",
         "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
         "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
+      }
+    },
+    {
+      "id": "boundary_2_label",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "boundary_label",
+      "minzoom": 0,
+      "layout": {
+        "visibility": "visible",
+        "text-field": "{name}",
+        "text-size": 12
+      },
+      "paint": {
+        "text-halo-color": "rgba(173, 166, 166, 1)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1,
+        "text-opacity": 1
       }
     },
     {
@@ -1647,8 +1672,8 @@
       "minzoom": 3,
       "maxzoom": 24,
       "paint": {
-        "circle-radius": 2,
-        "circle-color": "rgba(189, 52, 52, 1)",
+        "circle-radius": 1.5,
+        "circle-color": "rgba(255, 255, 255, 1)",
         "circle-opacity": 1
       }
     },
@@ -1665,7 +1690,8 @@
         "icon-ignore-placement": true,
         "icon-optional": false,
         "text-allow-overlap": false,
-        "text-ignore-placement": false
+        "text-ignore-placement": false,
+        "visibility": "none"
       },
       "paint": {"icon-opacity": 0.5}
     },
@@ -1674,11 +1700,11 @@
       "type": "symbol",
       "source": "ohm",
       "source-layer": "religious",
-      "minzoom": 3,
+      "minzoom": 8,
       "maxzoom": 24,
       "layout": {
         "text-field": "{name}",
-        "text-size": 10,
+        "text-size": {"base": 12, "stops": [[6, 6], [7, 8], [9, 9], [10, 11]]},
         "text-offset": [0, 0.4],
         "icon-allow-overlap": false,
         "icon-ignore-placement": false,
