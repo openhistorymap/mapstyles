@@ -7,21 +7,25 @@
         "openmaptiles:version": "3.x"
     },
     "sources": {
+        "openmaptiles": {
+          "type": "vector",
+          "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=q9mnFdtg2QxTwjYaTGjp"
+        },
         "natural_earth_shaded_relief": {
-            "maxzoom": 6,
-            "tileSize": 256,
-            "tiles": [
-                "https://klokantech.github.io/naturalearthtiles/tiles/natural_earth_2_shaded_relief.raster/{z}/{x}/{y}.png"
-            ],
-            "type": "raster"
+          "maxzoom": 6,
+          "tileSize": 256,
+          "tiles": [
+            "https://klokantech.github.io/naturalearthtiles/tiles/natural_earth_2_shaded_relief.raster/{z}/{x}/{y}.png"
+          ],
+          "type": "raster"
         },
         "ohm": {
-            "type": "vector",
-            "tiles": [
-                "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf"
-            ],
-            "minZoom": 0,
-            "maxZoom": 22
+          "type": "vector",
+          "tiles": [
+            "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf"
+          ],
+          "minZoom": 0,
+          "maxZoom": 14
         }
     },
     "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
