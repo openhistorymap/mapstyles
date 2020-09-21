@@ -41,7 +41,11 @@
       "type": "raster",
       "source": "natural_earth_shaded_relief",
       "maxzoom": 6,
-      "paint": {"raster-opacity": {"base": 1.5, "stops": [[0, 0.6], [6, 0.1]]}}
+      "paint": {
+        "raster-opacity": {"base": 1.5, "stops": [[0, 0.6], [6, 0.1]]},
+        "raster-saturation": 0,
+        "raster-resampling": "linear"
+      }
     },
     {
       "id": "park",
@@ -69,13 +73,13 @@
       "type": "fill",
       "source": "ohm",
       "source-layer": "landuse",
-      "maxzoom": 8,
+      "maxzoom": 11,
       "filter": ["==", "class", "residential"],
       "paint": {
         "fill-color": {
           "base": 1,
           "stops": [
-            [9, "hsla(0, 3%, 85%, 0.84)"],
+            [9, "rgba(199, 199, 199, 0.84)"],
             [12, "hsla(35, 57%, 88%, 0.49)"]
           ]
         }
@@ -234,6 +238,73 @@
       "paint": {
         "line-color": "#f0ede9",
         "line-width": {"base": 1.2, "stops": [[11, 0.5], [20, 6]]}
+      }
+    },
+    {
+      "id": "boundary_3",
+      "type": "line",
+      "source": "ohm",
+      "source-layer": "boundary",
+      "minzoom": 8,
+      "filter": ["all", ["==", "admin_level", 3]],
+      "layout": {"line-join": "round", "visibility": "visible"},
+      "paint": {
+        "line-color": "rgba(157, 145, 236, 1)",
+        "line-dasharray": [5, 1],
+        "line-width": {"base": 1, "stops": [[4, 0.4], [5, 1], [12, 1.8]]},
+        "line-opacity": 0.2
+      }
+    },
+    {
+      "id": "boundary_2_fill",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "boundary",
+      "minzoom": 0,
+      "maxzoom": 10,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": ["get", "color"],
+        "fill-opacity": {"stops": [[0, 0.8], [6, 0.6], [7, 0]]},
+        "fill-antialias": true,
+        "fill-outline-color": "rgba(53, 45, 45, 1)",
+        "fill-translate": [0, 0]
+      }
+    },
+    {
+      "id": "boundary_2_z0-4",
+      "type": "line",
+      "source": "ohm",
+      "source-layer": "boundary",
+      "maxzoom": 5,
+      "filter": ["all", ["==", "admin_level", 2], ["!has", "claimed_by"]],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "hsl(248, 1%, 41%)",
+        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
+        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
+      }
+    },
+    {
+      "id": "boundary_2_z5-",
+      "type": "line",
+      "source": "ohm",
+      "source-layer": "boundary",
+      "minzoom": 5,
+      "filter": ["all", ["==", "admin_level", 2]],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "hsl(248, 1%, 41%)",
+        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
+        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
       }
     },
     {
@@ -1285,91 +1356,6 @@
       }
     },
     {
-      "id": "boundary_3",
-      "type": "line",
-      "source": "ohm",
-      "source-layer": "boundary",
-      "minzoom": 8,
-      "filter": ["all", ["==", "admin_level", 3]],
-      "layout": {"line-join": "round", "visibility": "visible"},
-      "paint": {
-        "line-color": "rgba(157, 145, 236, 1)",
-        "line-dasharray": [5, 1],
-        "line-width": {"base": 1, "stops": [[4, 0.4], [5, 1], [12, 1.8]]},
-        "line-opacity": 0.2
-      }
-    },
-    {
-      "id": "boundary_2_fill",
-      "type": "fill",
-      "source": "ohm",
-      "source-layer": "boundary",
-      "minzoom": 0,
-      "maxzoom": 10,
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "fill-color": ["get", "color"],
-        "fill-opacity": {"stops": [[0, 0.8], [6, 0.6], [7, 0]]},
-        "fill-antialias": true,
-        "fill-outline-color": "rgba(164, 115, 115, 1)",
-        "fill-translate": [0, 0]
-      }
-    },
-    {
-      "id": "boundary_2_z0-4",
-      "type": "line",
-      "source": "ohm",
-      "source-layer": "boundary",
-      "maxzoom": 5,
-      "filter": ["all", ["==", "admin_level", 2], ["!has", "claimed_by"]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "hsl(248, 1%, 41%)",
-        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
-        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
-      }
-    },
-    {
-      "id": "boundary_2_z5-",
-      "type": "line",
-      "source": "ohm",
-      "source-layer": "boundary",
-      "minzoom": 5,
-      "filter": ["all", ["==", "admin_level", 2]],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "hsl(248, 1%, 41%)",
-        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
-        "line-width": {"base": 1, "stops": [[3, 1], [5, 1.2], [12, 3]]}
-      }
-    },
-    {
-      "id": "boundary_2_label",
-      "type": "symbol",
-      "source": "ohm",
-      "source-layer": "boundary_label",
-      "minzoom": 0,
-      "layout": {
-        "visibility": "visible",
-        "text-field": "{name}",
-        "text-size": 12
-      },
-      "paint": {
-        "text-halo-color": "rgba(173, 166, 166, 1)",
-        "text-halo-width": 1,
-        "text-halo-blur": 1,
-        "text-opacity": 1
-      }
-    },
-    {
       "id": "water_name_line",
       "type": "symbol",
       "source": "openmaptiles",
@@ -1554,22 +1540,43 @@
       }
     },
     {
+      "id": "place_mine",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "place",
+      "filter": ["all", ["==", "place", "mine"]],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Roboto Condensed Italic"],
+        "text-letter-spacing": 0.1,
+        "text-max-width": 9,
+        "text-size": 14,
+        "text-transform": "uppercase",
+        "visibility": "visible"
+      },
+      "paint": {
+        "text-color": "#633",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": 1.2
+      }
+    },
+    {
       "id": "place_other",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
       "filter": [
         "all",
         ["in", "class", "hamlet", "island", "islet", "neighbourhood", "suburb"]
       ],
       "layout": {
-        "text-field": "{name_en}",
+        "text-field": "{name}",
         "text-font": ["Roboto Condensed Italic"],
         "text-letter-spacing": 0.1,
         "text-max-width": 9,
         "text-size": {"base": 1.2, "stops": [[12, 10], [15, 14]]},
         "text-transform": "uppercase",
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#633",
@@ -1580,15 +1587,16 @@
     {
       "id": "place_village",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
+      "minzoom": 9,
       "filter": ["all", ["==", "class", "village"]],
       "layout": {
-        "text-field": "{name_en}",
+        "text-field": "{name}",
         "text-font": ["Roboto Regular"],
         "text-max-width": 8,
         "text-size": {"base": 1.2, "stops": [[10, 12], [15, 22]]},
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1599,18 +1607,19 @@
     {
       "id": "place_town",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
+      "minzoom": 8,
       "filter": ["all", ["==", "class", "town"]],
       "layout": {
         "icon-image": {"base": 1, "stops": [[0, "dot_9"], [8, ""]]},
         "text-anchor": "bottom",
-        "text-field": "{name_en}",
+        "text-field": "{name}",
         "text-font": ["Roboto Regular"],
         "text-max-width": 8,
         "text-offset": [0, 0],
         "text-size": {"base": 1.2, "stops": [[7, 12], [11, 16]]},
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1621,21 +1630,21 @@
     {
       "id": "place_city",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
-      "minzoom": 5,
+      "minzoom": 6,
       "filter": ["all", ["==", "class", "city"]],
       "layout": {
         "icon-image": {"base": 1, "stops": [[0, "dot_9"], [8, ""]]},
         "text-anchor": "bottom",
-        "text-field": "{name_en}",
+        "text-field": "{name}",
         "text-font": ["Roboto Medium"],
         "text-max-width": 8,
         "text-offset": [0, 0],
-        "text-size": {"base": 1.2, "stops": [[7, 14], [11, 24]]},
+        "text-size": {"base": 1.2, "stops": [[0, 14], [7, 14], [11, 24]]},
         "icon-allow-overlap": true,
         "icon-optional": false,
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1665,12 +1674,32 @@
       }
     },
     {
+      "id": "boundary_2_label",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "boundary_label",
+      "minzoom": 0,
+      "filter": ["all", [">", "_area", 100]],
+      "layout": {
+        "visibility": "visible",
+        "text-field": "{name}",
+        "text-size": 12
+      },
+      "paint": {
+        "text-halo-color": "rgba(173, 166, 166, 1)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1,
+        "text-opacity": 1
+      }
+    },
+    {
       "id": "religious_pois-points",
       "type": "circle",
       "source": "ohm",
       "source-layer": "religious",
       "minzoom": 3,
       "maxzoom": 24,
+      "layout": {"visibility": "none"},
       "paint": {
         "circle-radius": 1.5,
         "circle-color": "rgba(255, 255, 255, 1)",
@@ -1691,7 +1720,7 @@
         "icon-optional": false,
         "text-allow-overlap": false,
         "text-ignore-placement": false,
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {"icon-opacity": 0.5}
     },
@@ -1712,5 +1741,6 @@
       }
     }
   ],
-  "id": "ohm-political"
+  "id": "ohm-political",
+  "owner": "OpenHistoryMap"
 }
