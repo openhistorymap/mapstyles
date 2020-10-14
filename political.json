@@ -26,6 +26,14 @@
       ],
       "minZoom": 0,
       "maxZoom": 14
+    },
+    "ohm-ephemeral": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
+      ],
+      "minZoom": 0,
+      "maxZoom": 14
     }
   },
   "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
