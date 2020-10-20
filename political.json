@@ -22,7 +22,10 @@
     "ohm": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place"
       ],
       "minZoom": 0,
       "maxZoom": 22
@@ -30,7 +33,10 @@
     "ohm-ephemeral": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
       ],
       "minZoom": 0,
       "maxZoom": 25
@@ -38,7 +44,10 @@
     "ohm-boundaries": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
       ],
       "minZoom": 0,
       "maxZoom": 22
@@ -158,20 +167,16 @@
       "paint": {"fill-color": "rgb(236,238,204)"}
     },
     {
-      "id": "boundary_2_fill",
+      "id": "countries",
       "type": "fill",
       "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 0,
-      "maxzoom": 24,
-      "filter": [
-        "any",
-        ["==", "admin_level", 2],
-        ["==", "admin_level", "\"2\""]
-      ],
+      "maxzoom": 12,
+      "filter": ["all", ["==", "admin_level", 2]],
       "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": "rgba(174, 86, 86, 1)",
+        "fill-color": {"type": "identity", "property": "color"},
         "fill-opacity": {"stops": [[0, 0.8], [6, 0.7], [7, 0.4], [10, 0.2]]},
         "fill-antialias": true,
         "fill-translate": [0, 0]
@@ -1409,7 +1414,8 @@
       "type": "line",
       "source": "ohm-boundaries",
       "source-layer": "boundary",
-      "minzoom": 5,
+      "minzoom": 4,
+      "maxzoom": 12,
       "filter": [
         "any",
         ["==", "admin_level", 2],
@@ -1422,7 +1428,7 @@
       },
       "paint": {
         "line-color": "hsl(248, 1%, 41%)",
-        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1]]},
+        "line-opacity": {"base": 1, "stops": [[0, 0.4], [4, 1], [8, 0.2]]},
         "line-width": {"base": 0.1, "stops": [[3, 0.01], [5, 1.2], [12, 2]]}
       }
     },
@@ -1618,9 +1624,9 @@
     {
       "id": "poi_transit",
       "type": "symbol",
-      "source": "openmaptiles",
-      "source-layer": "poi",
-      "filter": ["all", ["in", "class", "bus", "rail", "airport"]],
+      "source": "ohm",
+      "source-layer": "transportation",
+      "filter": ["all", ["in", "class", "bus", "rail", "airport", "post", ""]],
       "layout": {
         "icon-image": "{class}_11",
         "text-anchor": "left",
@@ -1681,7 +1687,7 @@
     {
       "id": "place_other",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
       "filter": [
         "all",
@@ -1694,7 +1700,7 @@
         "text-max-width": 9,
         "text-size": {"base": 1.2, "stops": [[12, 10], [15, 14]]},
         "text-transform": "uppercase",
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#633",
@@ -1705,7 +1711,7 @@
     {
       "id": "place_village",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "village"]],
       "layout": {
@@ -1713,7 +1719,7 @@
         "text-font": ["Roboto Regular"],
         "text-max-width": 8,
         "text-size": {"base": 1.2, "stops": [[10, 12], [15, 22]]},
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1724,7 +1730,7 @@
     {
       "id": "place_town",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
       "filter": ["all", ["==", "class", "town"]],
       "layout": {
@@ -1735,7 +1741,7 @@
         "text-max-width": 8,
         "text-offset": [0, 0],
         "text-size": {"base": 1.2, "stops": [[7, 12], [11, 16]]},
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1746,7 +1752,7 @@
     {
       "id": "place_city",
       "type": "symbol",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "place",
       "minzoom": 5,
       "filter": ["all", ["==", "class", "city"]],
@@ -1760,7 +1766,7 @@
         "text-size": {"base": 1.2, "stops": [[7, 14], [11, 24]]},
         "icon-allow-overlap": true,
         "icon-optional": false,
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#333",
@@ -1864,14 +1870,6 @@
         "text-size": 10,
         "visibility": "visible"
       }
-    },
-    {
-      "id": "ohm_epe",
-      "type": "heatmap",
-      "source": "ohm-ephemeral",
-      "source-layer": "event",
-      "layout": {"visibility": "none"},
-      "paint": {"heatmap-intensity": 0.1}
     }
   ],
   "id": "ohm-political",
