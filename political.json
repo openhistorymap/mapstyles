@@ -22,10 +22,10 @@
     "ohm": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,transportation,place"
       ],
       "minZoom": 0,
-      "maxZoom": 14
+      "maxZoom": 22
     },
     "ohm-ephemeral": {
       "type": "vector",
@@ -33,7 +33,15 @@
         "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
       ],
       "minZoom": 0,
-      "maxZoom": 14
+      "maxZoom": 25
+    },
+    "ohm-boundaries": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
+      ],
+      "minZoom": 0,
+      "maxZoom": 22
     }
   },
   "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
@@ -49,7 +57,7 @@
       "type": "raster",
       "source": "natural_earth_shaded_relief",
       "maxzoom": 6,
-      "paint": {"raster-opacity": {"base": 1.5, "stops": [[0, 0.6], [6, 0.1]]}}
+      "paint": {"raster-opacity": {"base": 1.5, "stops": [[0, 0.8], [6, 0.1]]}}
     },
     {
       "id": "park",
@@ -152,15 +160,19 @@
     {
       "id": "boundary_2_fill",
       "type": "fill",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 0,
       "maxzoom": 24,
-      "filter": ["all", ["==", "admin_level", 2]],
+      "filter": [
+        "any",
+        ["==", "admin_level", 2],
+        ["==", "admin_level", "\"2\""]
+      ],
       "layout": {"visibility": "visible"},
       "paint": {
-        "fill-color": {"type": "identity", "property": "color"},
-        "fill-opacity": {"stops": [[0, 0.5], [6, 0.8], [7, 0.2], [10, 0.4]]},
+        "fill-color": "rgba(174, 86, 86, 1)",
+        "fill-opacity": {"stops": [[0, 0.8], [6, 0.7], [7, 0.4], [10, 0.2]]},
         "fill-antialias": true,
         "fill-translate": [0, 0]
       }
@@ -222,7 +234,7 @@
     {
       "id": "aeroway_fill",
       "type": "fill",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": ["==", "$type", "Polygon"],
@@ -231,7 +243,7 @@
     {
       "id": "aeroway_runway",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -247,7 +259,7 @@
     {
       "id": "aeroway_taxiway",
       "type": "line",
-      "source": "openmaptiles",
+      "source": "ohm",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -852,6 +864,7 @@
       "type": "line",
       "source": "ohm",
       "source-layer": "transportation",
+      "minzoom": 3,
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
@@ -1327,7 +1340,7 @@
     {
       "id": "boundary_6",
       "type": "line",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 16,
       "filter": ["all", ["==", "admin_level", 6]],
@@ -1342,7 +1355,7 @@
     {
       "id": "boundary_5",
       "type": "line",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 11,
       "maxzoom": 18,
@@ -1358,7 +1371,7 @@
     {
       "id": "boundary_4",
       "type": "line",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 8,
       "maxzoom": 12,
@@ -1374,11 +1387,15 @@
     {
       "id": "boundary_3",
       "type": "line",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 5,
       "maxzoom": 9,
-      "filter": ["all", ["==", "admin_level", 3]],
+      "filter": [
+        "any",
+        ["==", "admin_level", 3],
+        ["==", "admin_level", "\"3\""]
+      ],
       "layout": {"line-join": "round", "visibility": "visible"},
       "paint": {
         "line-color": "rgba(0, 0, 0, 1)",
@@ -1390,10 +1407,14 @@
     {
       "id": "boundary_2",
       "type": "line",
-      "source": "ohm",
+      "source": "ohm-boundaries",
       "source-layer": "boundary",
       "minzoom": 5,
-      "filter": ["all", ["==", "admin_level", 2]],
+      "filter": [
+        "any",
+        ["==", "admin_level", 2],
+        ["==", "admin_level", "\"2\""]
+      ],
       "layout": {
         "line-cap": "round",
         "line-join": "round",
@@ -1441,7 +1462,7 @@
         "text-field": "{name}",
         "text-size": 12,
         "symbol-placement": "point",
-        "text-allow-overlap": true,
+        "text-allow-overlap": false,
         "text-ignore-placement": false
       },
       "paint": {
@@ -1456,7 +1477,7 @@
       "type": "symbol",
       "source": "ohm",
       "source-layer": "boundary_label",
-      "minzoom": 4,
+      "minzoom": 1,
       "maxzoom": 8,
       "filter": ["all", ["==", "admin_level", 2]],
       "layout": {
