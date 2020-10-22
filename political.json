@@ -22,10 +22,10 @@
     "ohm": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://a.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://b.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://c.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place"
       ],
       "minZoom": 0,
       "maxZoom": 14,
@@ -35,10 +35,10 @@
     "ohm-ephemeral": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://a.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://b.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://a.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=movement,event"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
       ],
       "minZoom": 0,
       "maxZoom": 14,
@@ -48,10 +48,10 @@
     "ohm-boundaries": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
-        "https://a.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
-        "https://b.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
-        "https://c.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
       ],
       "minZoom": 0,
       "maxZoom": 14,
@@ -60,10 +60,10 @@
     "ohm-transportation": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=transportation",
-        "https://a.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=transportation",
-        "https://b.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=transportation",
-        "https://c.tiles.openhistorymap.org/items/1700/{z}/{y}/{x}/vector.pbf?layers=transportation"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation"
       ],
       "minZoom": 0,
       "maxZoom": 14,
