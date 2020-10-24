@@ -22,10 +22,10 @@
     "ohm": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place",
-        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place"
+        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place,building_label,landuse",
+        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place,building_label,landuse",
+        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place,building_label,landuse",
+        "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary_label,culture_label,waterway,building,industrial,place,building_label,landuse"
       ],
       "minZoom": 0,
       "maxZoom": 14,
@@ -101,18 +101,6 @@
       }
     },
     {
-      "id": "landcover_grass",
-      "type": "fill",
-      "source": "ohm",
-      "source-layer": "landcover",
-      "filter": ["all", ["==", "class", "grass"]],
-      "paint": {
-        "fill-antialias": false,
-        "fill-color": "rgba(176, 213, 154, 1)",
-        "fill-opacity": 0.3
-      }
-    },
-    {
       "id": "landcover_ice",
       "type": "fill",
       "source": "openmaptiles",
@@ -122,6 +110,46 @@
         "fill-antialias": false,
         "fill-color": "rgba(224, 236, 236, 1)",
         "fill-opacity": 0.8
+      }
+    },
+    {
+      "id": "green_garden-copy",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "landuse",
+      "filter": ["all", ["==", "building", "park"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-antialias": true,
+        "fill-color": "rgba(29, 94, 32, 1)",
+        "fill-opacity": 0.3
+      }
+    },
+    {
+      "id": "green_grass",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "landuse",
+      "filter": ["all", ["==", "building", "grass"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-antialias": false,
+        "fill-color": "rgba(108, 185, 70, 1)",
+        "fill-opacity": 0.3
+      }
+    },
+    {
+      "id": "green_garden",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "landuse",
+      "filter": ["all", ["==", "building", "garden"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-antialias": true,
+        "fill-color": "rgba(100, 131, 46, 1)",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "rgba(174, 95, 95, 1)"
       }
     },
     {
@@ -304,7 +332,7 @@
       "source": "ohm-transportation",
       "source-layer": "transportation",
       "minzoom": 13,
-      "filter": ["all"],
+      "filter": ["all", [">", "$area", 0]],
       "layout": {"visibility": "visible"},
       "paint": {"fill-color": "rgba(207, 188, 115, 1)"}
     },
@@ -318,7 +346,8 @@
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
         ["==", "class", "motorway"],
-        ["==", "ramp", 1]
+        ["==", "ramp", 1],
+        ["==", "$area", 0]
       ],
       "layout": {
         "line-cap": "round",
@@ -341,7 +370,8 @@
       "filter": [
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
-        ["in", "class", "service", "track"]
+        ["in", "class", "service", "track"],
+        ["==", "$area", 0]
       ],
       "layout": {"line-cap": "round", "line-join": "round"},
       "paint": {
@@ -371,29 +401,6 @@
       }
     },
     {
-      "id": "road_minor_casing",
-      "type": "line",
-      "source": "ohm-transportation",
-      "source-layer": "transportation",
-      "minzoom": 13,
-      "filter": [
-        "any",
-        ["==", "$type", "LineString"],
-        ["!in", "brunnel", "bridge", "tunnel"],
-        ["in", "class", "tertiary"],
-        ["!=", "ramp", 1]
-      ],
-      "layout": {"line-cap": "round", "line-join": "round"},
-      "paint": {
-        "line-color": "#cfcdca",
-        "line-opacity": {"stops": [[12, 0], [12.5, 1]]},
-        "line-width": {
-          "base": 1.2,
-          "stops": [[12, 0.5], [13, 1], [14, 4], [20, 20]]
-        }
-      }
-    },
-    {
       "id": "road_secondary_tertiary_casing",
       "type": "line",
       "source": "ohm-transportation",
@@ -403,9 +410,14 @@
         "all",
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "secondary", "tertiary"],
-        ["!=", "ramp", 1]
+        ["!=", "ramp", 1],
+        ["==", "$area", 0]
       ],
-      "layout": {"line-cap": "round", "line-join": "round"},
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
       "paint": {
         "line-color": "#e9ac77",
         "line-width": {"base": 1.2, "stops": [[8, 1.5], [20, 17]]}
@@ -518,7 +530,11 @@
         ["!in", "brunnel", "bridge", "tunnel"],
         ["in", "class", "secondary", "tertiary"]
       ],
-      "layout": {"line-cap": "round", "line-join": "round"},
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "none"
+      },
       "paint": {
         "line-color": "#fea",
         "line-width": {"base": 1.2, "stops": [[6.5, 0], [8, 0.5], [20, 13]]}
@@ -609,15 +625,19 @@
       "source": "ohm-transportation",
       "source-layer": "transportation",
       "minzoom": 13,
-      "filter": ["any", ["==", "class", "tertiary"]],
-      "layout": {"line-cap": "round", "line-join": "round"},
+      "filter": ["any", ["==", "class", "tertiary"], ["==", "$area", 0]],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "none"
+      },
       "paint": {
         "line-color": "rgba(197, 185, 131, 1)",
         "line-width": {"base": 1.2, "stops": [[13.5, 0], [14, 2.5], [20, 18]]}
       }
     },
     {
-      "id": "road_area-copy",
+      "id": "road_area_label",
       "type": "symbol",
       "source": "ohm-transportation",
       "source-layer": "transportation",
@@ -631,6 +651,24 @@
         "text-justify": "auto",
         "symbol-z-order": "auto",
         "text-size": 10
+      },
+      "paint": {"text-translate": [5, 1], "text-translate-anchor": "viewport"}
+    },
+    {
+      "id": "building_roof",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "building",
+      "minzoom": 11,
+      "maxzoom": 24,
+      "filter": ["all", ["==", "building", "roof"]],
+      "paint": {
+        "fill-color": "rgba(182, 128, 51, 1)",
+        "fill-outline-color": {
+          "base": 1,
+          "stops": [[13, "hsla(35, 6%, 79%, 0.32)"], [14, "hsl(35, 6%, 79%)"]]
+        },
+        "fill-opacity": 0.2
       }
     },
     {
@@ -640,8 +678,27 @@
       "source-layer": "building",
       "minzoom": 11,
       "maxzoom": 24,
+      "filter": ["all", ["!in", "building", "roof", "church"]],
+      "layout": {"visibility": "visible"},
       "paint": {
         "fill-color": "rgba(182, 128, 51, 1)",
+        "fill-outline-color": {
+          "base": 1,
+          "stops": [[13, "hsla(35, 6%, 79%, 0.32)"], [14, "hsl(35, 6%, 79%)"]]
+        }
+      }
+    },
+    {
+      "id": "building_church",
+      "type": "fill",
+      "source": "ohm",
+      "source-layer": "building",
+      "minzoom": 11,
+      "maxzoom": 24,
+      "filter": ["all", ["==", "building", "church"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(174, 114, 29, 1)",
         "fill-outline-color": {
           "base": 1,
           "stops": [[13, "hsla(35, 6%, 79%, 0.32)"], [14, "hsl(35, 6%, 79%)"]]
@@ -653,30 +710,25 @@
       "type": "fill-extrusion",
       "source": "ohm",
       "source-layer": "building",
-      "minzoom": 14,
-      "layout": {"visibility": "none"},
+      "minzoom": 18,
+      "filter": ["all", ["!=", "Piani", "-"]],
+      "layout": {"visibility": "visible"},
       "paint": {
-        "fill-extrusion-color": "hsl(35, 8%, 85%)",
-        "fill-extrusion-height": {
-          "property": "render_height",
-          "type": "identity"
-        },
-        "fill-extrusion-base": {
-          "property": "render_min_height",
-          "type": "identity"
-        },
-        "fill-extrusion-opacity": 0.8
+        "fill-extrusion-color": "rgba(182, 128, 51, 1)",
+        "fill-extrusion-base": 0,
+        "fill-extrusion-opacity": 0.9,
+        "fill-extrusion-height": ["*", 5, ["to-number", ["get", "Piani"]]]
       }
     },
     {
-      "id": "building-copy",
+      "id": "building_labels",
       "type": "symbol",
       "source": "ohm",
-      "source-layer": "building",
+      "source-layer": "building_label",
       "minzoom": 11,
       "maxzoom": 24,
       "layout": {
-        "text-field": "{name}",
+        "text-field": "{Name}",
         "text-size": 10,
         "text-allow-overlap": false,
         "text-rotation-alignment": "auto",
@@ -1221,6 +1273,60 @@
       "filter": ["all", ["==", "type", "battle"]],
       "layout": {},
       "paint": {"circle-color": "rgba(202, 18, 18, 1)", "circle-radius": 2}
+    },
+    {
+      "id": "industrial_bakery",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "industrial",
+      "minzoom": 16,
+      "filter": ["all", ["==", "shop", "bakery"]],
+      "layout": {
+        "text-field": "",
+        "icon-image": "bakery_11",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+        "symbol-placement": "point",
+        "symbol-z-order": "auto"
+      },
+      "paint": {"icon-opacity": 0.6}
+    },
+    {
+      "id": "industrial_butcher",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "industrial",
+      "minzoom": 16,
+      "filter": ["all", ["==", "shop", "butcher"]],
+      "layout": {
+        "text-field": "",
+        "icon-image": "butcher_11",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+        "symbol-placement": "point",
+        "symbol-z-order": "auto"
+      },
+      "paint": {"icon-opacity": 0.6}
+    },
+    {
+      "id": "industrial",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "industrial",
+      "minzoom": 16,
+      "filter": ["all", ["==", "shop", "shop"]],
+      "layout": {
+        "text-field": "",
+        "icon-image": "shop_11",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+        "symbol-placement": "point",
+        "symbol-z-order": "auto"
+      },
+      "paint": {"icon-opacity": 0.6}
     }
   ],
   "id": "ohm-political",
