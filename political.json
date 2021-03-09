@@ -40,8 +40,6 @@
         "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
         "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
       ],
-      "minZoom": 0,
-      "maxZoom": 14,
       "maxzoom": 25,
       "minzoom": 3
     },
@@ -54,7 +52,6 @@
         "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=boundary,culture,water,landuse"
       ],
       "minZoom": 0,
-      "maxZoom": 14,
       "maxzoom": 25
     },
     "ohm-transportation": {
@@ -65,8 +62,6 @@
         "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation",
         "https://c.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=transportation"
       ],
-      "minZoom": 0,
-      "maxZoom": 14,
       "maxzoom": 25,
       "minzoom": 3
     }
@@ -74,6 +69,7 @@
   "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=q9mnFdtg2QxTwjYaTGjp",
   "layers": [
+  
     {
       "id": "background",
       "type": "background",
@@ -176,6 +172,17 @@
       "source-layer": "landuse",
       "filter": ["==", "class", "cemetery"],
       "paint": {"fill-color": "hsl(75, 37%, 81%)"}
+    },
+    {
+      "id": "countries-border-marks",
+      "type": "circle",
+      "source": "ohm-boundaries",
+      "source-layer": "boundary",
+      "minzoom": 7,
+      "maxzoom": 22,
+      "filter": ["all"],
+      "layout": {"visibility": "none"},
+      "paint": {"circle-color": "rgba(26, 18, 18, 1)", "circle-radius": 2}
     },
     {
       "id": "countries",
@@ -862,13 +869,15 @@
         "text-size": 12,
         "symbol-placement": "point",
         "text-allow-overlap": false,
-        "text-ignore-placement": false
+        "text-ignore-placement": false,
+        "text-transform": "uppercase"
       },
       "paint": {
         "text-halo-color": "rgba(255, 255, 255, 1)",
-        "text-halo-width": 2,
+        "text-halo-width": 1.2,
         "text-opacity": {"stops": [[8, 1], [9, 0.1]]},
-        "text-halo-blur": 2
+        "text-halo-blur": 1,
+        "text-color": "rgba(65, 0, 0, 1)"
       }
     },
     {
@@ -1076,6 +1085,54 @@
         "text-rotation-alignment": "viewport",
         "text-size": 10,
         "icon-size": 0.8
+      }
+    },
+    {
+      "id": "place_other-copy-copy",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "place",
+      "minzoom": 3,
+      "maxzoom": 9,
+      "filter": ["all"],
+      "layout": {
+        "text-field": "",
+        "text-font": [],
+        "text-letter-spacing": 0.1,
+        "text-max-width": 9,
+        "text-transform": "uppercase",
+        "visibility": "visible",
+        "icon-image": "dot_9",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true
+      },
+      "paint": {
+        "text-color": "#633",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": 1.1,
+        "text-opacity": {"stops": [[6, 1], [8, 0.1]], "base": 1}
+      }
+    },
+    {
+      "id": "place_other-copy",
+      "type": "symbol",
+      "source": "ohm",
+      "source-layer": "place",
+      "minzoom": 6,
+      "filter": ["all"],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Roboto Condensed Italic"],
+        "text-letter-spacing": 0.1,
+        "text-max-width": 9,
+        "text-size": {"base": 1, "stops": [[12, 10], [15, 12]]},
+        "text-transform": "uppercase",
+        "visibility": "visible"
+      },
+      "paint": {
+        "text-color": "#633",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": 1.1
       }
     },
     {
