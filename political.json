@@ -35,10 +35,18 @@
     "ohm-ephemeral": {
       "type": "vector",
       "tiles": [
-        "https://tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://b.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event",
-        "https://a.tiles.openhistorymap.org/items/{atDate}/{z}/{y}/{x}/vector.pbf?layers=movement,event"
+        "https://a.tiles.events.openhistorymap.org/items/{atDate}/{z}/{x}/{y}/vector.pbf",
+        "https://b.tiles.events.openhistorymap.org/items/{atDate}/{z}/{x}/{y}/vector.pbf",
+        "https://c.tiles.events.openhistorymap.org/items/{atDate}/{z}/{x}/{y}/vector.pbf",
+        "https://tiles.events.openhistorymap.org/items/{atDate}/{z}/{x}/{y}/vector.pbf"
+      ],
+      "maxzoom": 25,
+      "minzoom": 3
+    },
+    "ohm-hsv": {
+      "type": "vector",
+      "tiles": [
+        "https://api.view.openhistorymap.org/items/{atDate}/{z}/{x}/{y}/vector.pbf"
       ],
       "maxzoom": 25,
       "minzoom": 3
@@ -69,7 +77,8 @@
   "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=q9mnFdtg2QxTwjYaTGjp",
   "layers": [
-  
+    
+    
     {
       "id": "background",
       "type": "background",
@@ -1295,26 +1304,10 @@
       }
     },
     {
-      "id": "event",
-      "type": "circle",
-      "source": "ohm-ephemeral",
-      "source-layer": "event",
-      "filter": ["all", ["!=", "type", "battle"]],
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "circle-color": "rgba(35, 43, 28, 1)",
-        "circle-pitch-scale": "map",
-        "circle-translate-anchor": "map",
-        "circle-pitch-alignment": "viewport",
-        "circle-radius": 2,
-        "circle-stroke-opacity": 0
-      }
-    },
-    {
       "id": "battles-label",
       "type": "symbol",
       "source": "ohm-ephemeral",
-      "source-layer": "event",
+      "source-layer": "eph",
       "filter": ["all", ["==", "type", "battle"]],
       "layout": {
         "text-field": "{service}",
@@ -1326,7 +1319,7 @@
       "id": "battles",
       "type": "circle",
       "source": "ohm-ephemeral",
-      "source-layer": "event",
+      "source-layer": "eph",
       "filter": ["all", ["==", "type", "battle"]],
       "layout": {},
       "paint": {"circle-color": "rgba(202, 18, 18, 1)", "circle-radius": 2}
@@ -1384,7 +1377,126 @@
         "symbol-z-order": "auto"
       },
       "paint": {"icon-opacity": 0.6}
+    },
+    {
+      "id": "event-label",
+      "type": "symbol",
+      "source": "ohm-ephemeral",
+      "source-layer": "eph",
+      "minzoom": 0,
+      "filter": ["all", ["==", "ohm_type", "position"]],
+      "layout": {
+        "visibility": "visible",
+        "text-field": "{label}",
+        "text-size": {"stops": [[6, 9], [10, 12]]},
+        "text-offset": [0, -1],
+        "text-optional": false,
+        "text-keep-upright": false,
+        "text-allow-overlap": false
+      },
+      "paint": {}
+    },
+    {
+      "id": "event",
+      "type": "circle",
+      "source": "ohm-ephemeral",
+      "source-layer": "eph",
+      "minzoom": 0,
+      "filter": ["all", ["==", "ohm_type", "position"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(1, 2, 1, 0.53)",
+        "circle-pitch-scale": "viewport",
+        "circle-translate-anchor": "viewport",
+        "circle-pitch-alignment": "map",
+        "circle-radius": 2,
+        "circle-stroke-opacity": 1,
+        "circle-opacity": 1,
+        "circle-stroke-width": 0,
+        "circle-blur": 0
+      }
+    },
+    {
+      "id": "bombing-copy-copy",
+      "type": "symbol",
+      "source": "ohm-ephemeral",
+      "source-layer": "eph",
+      "minzoom": 3,
+      "filter": [
+        "all",
+        ["==", "ohm_type", "traumatic"],
+        ["==", "ohm_subtype", "traumatic:bombing"]
+      ],
+      "layout": {
+        "visibility": "none",
+        "text-field": ["get", "label"],
+        "text-size": 9,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-keep-upright": false,
+        "text-optional": false,
+        "text-radial-offset": 4
+      },
+      "paint": {
+        "text-color": "rgba(65, 60, 60, 1)",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 0,
+        "text-translate-anchor": "viewport",
+        "text-translate": [0, 7]
+      }
+    },
+    {
+      "id": "bombing",
+      "type": "circle",
+      "source": "ohm-ephemeral",
+      "source-layer": "eph",
+      "minzoom": 0,
+      "filter": [
+        "all",
+        ["==", "ohm_type", "traumatic"],
+        ["==", "ohm_subtype", "traumatic:bombing"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(255, 0, 0, 0.53)",
+        "circle-pitch-scale": "viewport",
+        "circle-translate-anchor": "viewport",
+        "circle-pitch-alignment": "map",
+        "circle-radius": ["sqrt", ["number", ["get", "bombing:tons"], 4]],
+        "circle-opacity": 1,
+        "circle-blur": 0,
+        "circle-stroke-color": "rgba(0, 0, 0, 1)",
+        "circle-stroke-opacity": 1
+      }
+    },
+    {
+      "id": "bombing-copy",
+      "type": "symbol",
+      "source": "ohm-ephemeral",
+      "source-layer": "eph",
+      "minzoom": 13,
+      "filter": [
+        "all",
+        ["==", "ohm_type", "traumatic"],
+        ["==", "ohm_subtype", "traumatic:bombing"]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "text-field": ["get", "bombing:tons"],
+        "text-size": 9,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-keep-upright": false,
+        "text-optional": false,
+        "text-radial-offset": 4
+      },
+      "paint": {
+        "text-color": "rgba(252, 4, 4, 1)",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 1
+      }
     }
+    
   ],
   "id": "ohm-political",
   "owner": "OpenHistoryMap"
